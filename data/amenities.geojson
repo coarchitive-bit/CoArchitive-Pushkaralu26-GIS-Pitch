@@ -1,0 +1,14 @@
+{
+"type": "FeatureCollection",
+"name": "amenities",
+"crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" } },
+"features": [
+{"type":"Feature","properties":{"name":"hospital","amenity id":"1","category":"medical","suncategor":null,"ghat id":1,"status":"active","accessibil":null},"geometry":{"type":"Point","coordinates":[81.767796027786744,17.006601847982868]}},
+{"type":"Feature","properties":{"name":"changing rooms","amenity id":null,"category":"sanitation","suncategor":null,"ghat id":1,"status":"active","accessibil":null},"geometry":{"type":"Point","coordinates":[81.7671310977464,17.006540942479152]}},
+{"type":"Feature","properties":{"name":"toilets","amenity id":null,"category":"Safety","suncategor":null,"ghat id":2,"status":"active","accessibil":null},"geometry":{"type":"Point","coordinates":[81.767212621736007,17.007612876451812]}},
+{"type":"Feature","properties":{"name":"washrooms","amenity id":null,"category":"sanitation","suncategor":null,"ghat id":2,"status":"not active","accessibil":null},"geometry":{"type":"Point","coordinates":[81.767844432655565,17.007364383213414]}},
+{"type":"Feature","properties":{"name":"control center","amenity id":null,"category":"informatio","suncategor":null,"ghat id":3,"status":"not active","accessibil":null},"geometry":{"type":"Point","coordinates":[81.768631648680341,17.006380151854195]}},
+{"type":"Feature","properties":{"name":"lost and found","amenity id":null,"category":"Safety","suncategor":null,"ghat id":3,"status":"active","accessibil":null},"geometry":{"type":"Point","coordinates":[81.767790932537395,17.00771032469061]}},
+{"type":"Feature","properties":{"name":"water drinking point","amenity id":null,"category":"water","suncategor":null,"ghat id":3,"status":"not active","accessibil":null},"geometry":{"type":"Point","coordinates":[81.767709408547788,17.00618038149155]}}
+]
+}

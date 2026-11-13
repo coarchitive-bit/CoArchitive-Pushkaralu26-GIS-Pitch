@@ -1,0 +1,10 @@
+{
+"type": "FeatureCollection",
+"name": "parking lots",
+"crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" } },
+"features": [
+{"type":"Feature","properties":{"id":null,"parking_id":"Parking lot 1","capacity":500,"vehicle ty":"cars","status":"closed","ghat id":2,"descriptio":null,"priority":null},"geometry":{"type":"MultiPolygon","coordinates":[[[[81.769918199141529,17.009335266601603],[81.770937249011794,17.009471692867209],[81.770366581084446,17.008916242450216],[81.769775532159713,17.008818794838795],[81.769918199141529,17.009335266601603]]]]}},
+{"type":"Feature","properties":{"id":null,"parking_id":"Parking lot 3","capacity":4000,"vehicle ty":"bikes","status":"open","ghat id":3,"descriptio":null,"priority":null},"geometry":{"type":"MultiPolygon","coordinates":[[[[81.770132199614309,17.006431312522569],[81.770285057094839,17.007035494596895],[81.771334678461173,17.007035494596895],[81.771242963972853,17.006606720422312],[81.770132199614309,17.006431312522569]]]]}},
+{"type":"Feature","properties":{"id":null,"parking_id":"Parking lot 2","capacity":20,"vehicle ty":"all","status":"open","ghat id":2,"descriptio":null,"priority":null},"geometry":{"type":"MultiPolygon","coordinates":[[[[81.768104290372506,17.005447076261003],[81.769113149744058,17.00562248508232],[81.769102959245359,17.005242432428556],[81.768175623863428,17.004920848811647],[81.768104290372506,17.005447076261003]]]]}}
+]
+}
