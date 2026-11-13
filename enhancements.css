@@ -1,0 +1,330 @@
+/* ==========================================================
+   PUSHKARALU GIS — ENHANCEMENTS
+   Uses the SAME palette as the existing site:
+   card #1E2328 · gold #D4A72C · muted #AAB0B5
+   Nothing here changes the base map, its layers or its colours.
+   ========================================================== */
+
+:root {
+    --pk-scale: 1;
+    --pk-bg: rgba(30, 35, 40, 0.96);
+    --pk-border: rgba(212, 167, 44, 0.55);
+    --pk-gold: #D4A72C;
+    --pk-muted: #AAB0B5;
+    --pk-good: #34D399;
+    --pk-bad: #D21404;
+    --pk-blue: #4285F4;
+}
+
+/* ---------- container (top-left) ---------- */
+.pk-ui {
+    position: absolute;
+    top: 12px;
+    left: 12px;
+    z-index: 20;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+    max-width: calc(100vw - 24px);
+    font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Noto Sans Telugu", "Noto Sans Devanagari", sans-serif;
+    font-size: calc(13px * var(--pk-scale));
+    color: #fff;
+    pointer-events: none;
+}
+.pk-ui > * { pointer-events: auto; }
+.pk-ui button { font-family: inherit; }
+
+/* ---------- search ---------- */
+.pk-search {
+    position: relative;
+    width: 290px;
+    max-width: calc(100vw - 200px);
+    min-width: 170px;
+}
+.pk-search input {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 10px 12px 10px 34px;
+    border-radius: 12px;
+    border: 1px solid rgba(255,255,255,0.2);
+    background: rgba(30, 35, 40, 0.92);
+    backdrop-filter: blur(8px);
+    color: #fff;
+    font-size: calc(13px * var(--pk-scale));
+    font-family: inherit;
+    outline: none;
+}
+.pk-search input::placeholder { color: var(--pk-muted); }
+.pk-search input:focus { border-color: var(--pk-gold); }
+.pk-search-icon {
+    position: absolute;
+    left: 11px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 13px;
+    pointer-events: none;
+    opacity: 0.85;
+}
+.pk-results {
+    position: absolute;
+    top: calc(100% + 6px);
+    left: 0;
+    width: max(100%, 260px);
+    max-height: 240px;
+    overflow-y: auto;
+    background: var(--pk-bg);
+    border: 1px solid var(--pk-border);
+    border-radius: 14px;
+    box-shadow: 0 10px 35px rgba(0,0,0,0.45);
+    backdrop-filter: blur(10px);
+    display: none;
+    z-index: 30;
+}
+.pk-results.show { display: block; }
+.pk-result {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+    padding: 10px 12px;
+    border: none;
+    background: transparent;
+    color: #fff;
+    text-align: left;
+    cursor: pointer;
+    font-size: calc(13px * var(--pk-scale));
+}
+.pk-result:hover, .pk-result:focus { background: rgba(212,167,44,0.16); outline: none; }
+.pk-result small { display: block; color: var(--pk-muted); font-size: calc(11px * var(--pk-scale)); margin-top: 2px; }
+.pk-result-emoji { font-size: 18px; flex: 0 0 auto; }
+.pk-no-results { padding: 12px; color: var(--pk-muted); }
+
+/* ---------- Google Maps hint pill ---------- */
+.pk-hint {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    max-width: 330px;
+    padding: 8px 10px 8px 12px;
+    border-radius: 12px;
+    background: var(--pk-bg);
+    border: 1px solid var(--pk-border);
+    box-shadow: 0 6px 20px rgba(0,0,0,0.35);
+    backdrop-filter: blur(8px);
+    line-height: 1.35;
+    font-size: calc(12px * var(--pk-scale));
+}
+.pk-hint-icon { font-size: 16px; flex: 0 0 auto; }
+.pk-hint b { color: var(--pk-gold); }
+.pk-hint-close {
+    flex: 0 0 auto;
+    width: 22px; height: 22px;
+    border: none; border-radius: 50%;
+    background: rgba(255,255,255,0.08);
+    color: #fff; font-size: 15px; line-height: 22px;
+    cursor: pointer; padding: 0;
+}
+
+/* ---------- toolbar ---------- */
+.pk-toolbar { display: flex; flex-wrap: wrap; gap: 8px; }
+.pk-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    min-height: 42px;
+    padding: 8px 12px;
+    border-radius: 12px;
+    border: 1px solid rgba(255,255,255,0.2);
+    background: rgba(30, 35, 40, 0.92);
+    backdrop-filter: blur(8px);
+    color: #fff;
+    font-size: calc(13px * var(--pk-scale));
+    cursor: pointer;
+    white-space: nowrap;
+}
+.pk-btn:hover { background: rgba(50, 55, 60, 0.95); }
+.pk-btn.active { border-color: var(--pk-gold); background: rgba(212,167,44,0.18); }
+.pk-btn .pk-ico { font-size: 16px; line-height: 1; }
+.pk-btn.pk-emergency { border-color: rgba(210, 20, 4, 0.8); }
+.pk-btn.pk-emergency.active { background: rgba(210, 20, 4, 0.25); }
+
+/* ---------- panels ---------- */
+.pk-panel {
+    display: none;
+    width: min(340px, calc(100vw - 24px));
+    max-height: calc(100vh - 290px);
+    max-height: calc(100dvh - 290px);
+    overflow-y: auto;
+    box-sizing: border-box;
+    padding: 14px;
+    border-radius: 16px;
+    background: var(--pk-bg);
+    border: 1px solid var(--pk-border);
+    box-shadow: 0 10px 35px rgba(0,0,0,0.45);
+    backdrop-filter: blur(10px);
+}
+.pk-panel.show { display: block; }
+.pk-panel-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
+.pk-panel-title { font-size: calc(15px * var(--pk-scale)); font-weight: 700; margin: 0; }
+.pk-panel-sub { color: var(--pk-muted); font-size: calc(11px * var(--pk-scale)); margin: 0 0 10px; line-height: 1.4; }
+.pk-x {
+    width: 26px; height: 26px; border: none; border-radius: 50%;
+    background: rgba(255,255,255,0.08); color: #fff; font-size: 17px;
+    line-height: 26px; padding: 0; cursor: pointer;
+}
+.pk-section-label {
+    color: var(--pk-muted);
+    font-size: calc(10px * var(--pk-scale));
+    letter-spacing: 1px;
+    font-weight: 700;
+    text-transform: uppercase;
+    margin: 12px 0 6px;
+}
+
+/* layer rows */
+.pk-layer-row {
+    display: flex; align-items: center; gap: 10px;
+    padding: 7px 4px; cursor: pointer; user-select: none;
+}
+.pk-layer-row input { accent-color: #D4A72C; width: 18px; height: 18px; flex: 0 0 auto; }
+.pk-swatch { flex: 0 0 auto; width: 26px; height: 14px; border-radius: 4px; }
+.pk-swatch.ghat { background: rgba(122,31,31,0.6); border: 2px solid #D4A72C; }
+.pk-swatch.parking { background: rgba(37,99,235,0.55); border: 2px solid #1E3A8A; }
+.pk-swatch.approach { height: 5px; background: #D21404; box-shadow: 0 0 0 2px #420C09; border-radius: 3px; }
+.pk-swatch.walking { height: 0; border-top: 4px dashed #34D399; background: none; }
+.pk-swatch.amen { background: none; width: 26px; height: 26px; display: flex; align-items: center; justify-content: center; }
+.pk-swatch.amen img { width: 24px; height: 24px; object-fit: contain; }
+.pk-layer-text { flex: 1 1 auto; }
+.pk-layer-count { color: var(--pk-muted); font-size: calc(11px * var(--pk-scale)); }
+
+/* chips */
+.pk-chips { display: flex; flex-wrap: wrap; gap: 6px; }
+.pk-chip {
+    display: inline-flex; align-items: center; gap: 6px;
+    padding: 7px 10px; border-radius: 999px;
+    border: 1px solid rgba(212,167,44,0.35);
+    background: rgba(255,255,255,0.06);
+    color: #fff; cursor: pointer;
+    font-size: calc(12px * var(--pk-scale));
+}
+.pk-chip img { width: 18px; height: 18px; object-fit: contain; }
+.pk-chip:hover { background: rgba(212,167,44,0.16); border-color: var(--pk-gold); }
+.pk-chip.off { opacity: 0.4; }
+
+/* nearest grid */
+.pk-near-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; }
+.pk-near-btn {
+    display: flex; align-items: center; gap: 8px;
+    padding: 10px; border-radius: 12px;
+    border: 1px solid rgba(212,167,44,0.35);
+    background: rgba(255,255,255,0.06);
+    color: #fff; cursor: pointer; text-align: left;
+    font-size: calc(12px * var(--pk-scale));
+}
+.pk-near-btn img { width: 26px; height: 26px; object-fit: contain; flex: 0 0 auto; }
+.pk-near-btn:hover, .pk-near-btn.active { background: rgba(212,167,44,0.16); border-color: var(--pk-gold); }
+.pk-near-result {
+    margin-top: 12px; padding: 12px; border-radius: 12px;
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(212,167,44,0.35);
+    line-height: 1.45;
+}
+.pk-near-result:empty { display: none; }
+.pk-near-name { font-weight: 700; font-size: calc(15px * var(--pk-scale)); }
+.pk-near-meta { color: var(--pk-muted); font-size: calc(12px * var(--pk-scale)); margin: 4px 0 10px; }
+.pk-row { display: flex; gap: 8px; }
+.pk-row > button { flex: 1 1 0; }
+.pk-primary {
+    padding: 10px 12px; border: none; border-radius: 10px;
+    background: var(--pk-gold); color: #1E2328; font-weight: 700;
+    font-size: calc(13px * var(--pk-scale)); cursor: pointer;
+}
+.pk-secondary {
+    padding: 10px 12px; border-radius: 10px;
+    border: 1px solid rgba(255,255,255,0.25);
+    background: transparent; color: #fff;
+    font-size: calc(13px * var(--pk-scale)); cursor: pointer;
+}
+.pk-note { color: var(--pk-muted); font-size: calc(11px * var(--pk-scale)); margin-top: 8px; }
+
+/* emergency */
+.pk-call {
+    display: flex; align-items: center; justify-content: space-between; gap: 10px;
+    padding: 12px; margin-bottom: 8px; border-radius: 12px;
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.14);
+    color: #fff; text-decoration: none;
+}
+.pk-call:hover { border-color: var(--pk-gold); }
+.pk-call-num {
+    font-weight: 700; font-size: calc(17px * var(--pk-scale));
+    color: #1E2328; background: #fff; border-radius: 8px; padding: 4px 10px;
+}
+.pk-call.sos .pk-call-num { background: var(--pk-bad); color: #fff; }
+
+/* language */
+.pk-lang-row { display: flex; gap: 8px; }
+.pk-lang-row button {
+    flex: 1 1 0; padding: 10px 6px; border-radius: 10px;
+    border: 1px solid rgba(255,255,255,0.25);
+    background: transparent; color: #fff; cursor: pointer;
+    font-size: calc(14px * var(--pk-scale));
+}
+.pk-lang-row button.active { background: var(--pk-gold); color: #1E2328; border-color: var(--pk-gold); font-weight: 700; }
+
+/* badges */
+.pk-badge {
+    display: inline-block; padding: 3px 9px; border-radius: 999px;
+    font-size: calc(11px * var(--pk-scale)); font-weight: 700;
+}
+.pk-badge.good { background: rgba(52,211,153,0.18); color: #34D399; border: 1px solid rgba(52,211,153,0.5); }
+.pk-badge.bad  { background: rgba(210,20,4,0.2);   color: #FF6B5E; border: 1px solid rgba(210,20,4,0.6); }
+.pk-badge.info { background: rgba(255,255,255,0.08); color: #fff; border: 1px solid rgba(255,255,255,0.2); }
+
+/* ---------- Google Maps dialog extras ---------- */
+.amenity-dialog { max-height: 90vh; overflow-y: auto; }
+.pk-dialog-meta { display: flex; flex-wrap: wrap; gap: 6px; justify-content: center; margin: -8px 0 14px; }
+.pk-dialog-warn {
+    margin: 0 0 14px; padding: 9px 11px; border-radius: 10px;
+    background: rgba(210,20,4,0.18); border: 1px solid rgba(210,20,4,0.55);
+    color: #FFB4AC; font-size: calc(12px * var(--pk-scale)); line-height: 1.4;
+}
+.pk-dialog-tip {
+    margin: 0 0 14px; color: var(--pk-gold);
+    font-size: calc(12px * var(--pk-scale)); line-height: 1.4;
+}
+.pk-dialog-actions { display: flex; gap: 8px; margin-bottom: 6px; }
+.pk-dialog-actions button {
+    flex: 1 1 0; padding: 10px 8px; border-radius: 10px;
+    border: 1px solid rgba(255,255,255,0.25);
+    background: transparent; color: #fff; cursor: pointer;
+    font-size: calc(12px * var(--pk-scale));
+}
+.pk-dialog-actions button:hover { border-color: var(--pk-gold); }
+
+/* the existing dialog scales with the text-size button too */
+.amenity-dialog-title { font-size: calc(19px * var(--pk-scale)); }
+.amenity-dialog-text  { font-size: calc(13px * var(--pk-scale)); }
+.google-maps-btn      { font-size: calc(14px * var(--pk-scale)); }
+.cancel-dialog-btn    { font-size: calc(13px * var(--pk-scale)); }
+.google-maps-btn { display: flex; align-items: center; justify-content: center; gap: 8px; }
+
+/* ---------- offline banner ---------- */
+.pk-offline {
+    position: absolute; top: 0; left: 50%; transform: translate(-50%, -120%);
+    z-index: 40; padding: 8px 14px; border-radius: 0 0 12px 12px;
+    background: var(--pk-bad); color: #fff;
+    font-family: system-ui, sans-serif; font-size: 12px; text-align: center;
+    max-width: calc(100vw - 24px);
+    transition: transform .3s ease;
+}
+.pk-offline.show { transform: translate(-50%, 0); }
+
+/* ---------- mobile ---------- */
+@media (max-width: 760px) {
+    .pk-btn .pk-label { display: none; }
+    .pk-btn { padding: 8px 11px; min-width: 42px; justify-content: center; }
+    .pk-hint { max-width: calc(100vw - 190px); }
+    .pk-panel { max-height: calc(100vh - 330px); max-height: calc(100dvh - 330px); }
+}
